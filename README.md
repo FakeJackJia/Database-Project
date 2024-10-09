@@ -1,2 +1,2 @@
 # Database-Project
-Integrated MySQL, MongoDB, and Redis in a designed news website.
+Developed a News Management System using Flask, integrating SQLAlchemy for MySQL and MongoEngine for MongoDB to handle news articles and user comments.
