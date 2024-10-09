@@ -1,0 +1,52 @@
+{% extends "home_base.html" %}
+{% block head %}
+<title>新闻详情页</title>
+  <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+{% endblock %}
+  {% block content %}
+  <!-- 新闻内容部分 -->
+    <div class="container">
+      <!-- flash消息 -->
+      {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="alert alert-{{category}}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{message}}
+      </div>
+      {% endfor %}
+      <!-- //flash消息 -->
+      <h3>{{news_obj.title}}</h3>
+      <p>所属分类：{{news_obj.news_type}} <small class="pull-right text-muted">发表时间：{{news_obj.created_at}}</small></p>
+      <hr>
+      <img src="{{news_obj.img_url}}" alt="图片">
+      <p>{{news_obj.content}}</p>
+      <hr>
+      <h4>评论列表</h4>
+      {% for comment_obj in news_obj.get_comments() %}
+      <blockquote>
+        {{comment_obj.content}}
+        <footer class="text-muted text-right">{{comment_obj.created_at}}</footer>
+      </blockquote>
+      {% endfor %}
+      <hr>
+      <h4>发表评论</h4>
+      <form class="comment-form" method='post' action="{{url_for('comment_add', news_id=news_obj.id)}}">
+        <div class="form-group">
+          {{form.content}}
+          {% if form.content.errors %}
+            <span class="text-danger">{{form.content.errors[0]}}</span>
+          {% endif %}
+        </div>
+        <div class="form-group text-right">
+          {{form.csrf_token}}
+          {{form.object_id}}
+          {{form.reply_id}}
+          {{form.submit}}
+        </div>
+      </form>
+    </div>
+  {% endblock %}
+  <!-- /新闻内容部分 -->
+{% block extrajs %}
+  <script src="/static/jquery.1.10.2.min.js"></script>
+  <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}

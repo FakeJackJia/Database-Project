@@ -1,0 +1,18 @@
+{% extends "home_base.html" %}
+{% block head %}
+<title>新闻类别页</title>
+{% endblock %}
+{% block content %}
+<h3>新闻类别>{{news_type}}</h3>
+{% for item in news_list %}
+<div class="list-news">
+    <div class="img-content">
+        <img src="{{ item.img_url }}" alt="图片">
+    </div>
+    <div class="right-content">
+        <p><a href="{{url_for('detail', pk=item.id)}}">{{item.title}}</a></p>
+        <small>{{item.created_at}}</small>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
